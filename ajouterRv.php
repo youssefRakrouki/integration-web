@@ -1,0 +1,39 @@
+<?PHP
+
+include "../../entities/Reservation.php";
+include "../../core/ReservationC.php";
+include "../../core/VolC.php";
+
+if (isset($_GET['idVol'])){
+
+    $volC = new VolC();
+
+       $list= $volC->recupererVol($_GET['idVol']);
+    date_default_timezone_set("Africa/Tunisie");
+    echo "The time is " . date("h:i:sa");
+    $dateReservation = date("h:i:sa");
+    foreach($list as $row){
+        echo $row['idVol'];
+        $idVol = $row['idVol'];
+        $prixVol = $row['prixVol'];
+    }
+
+    $res=new Reservation('07238394', $idVol, 0, $dateReservation, $prixVol);
+
+    $res1C=new ReservationC();
+
+    $res1C->ajouterReservationVol('07238394', $idVol, 0, $dateReservation, $prixVol);
+    $volC = new VolC();
+
+    $list= $volC->recupererVol($_GET['idVol']);
+
+
+
+    header('Location: coming-soon.html');
+
+}else{
+    echo"verifier les champs4";
+}
+//*/
+
+?>
